@@ -1,0 +1,17 @@
+---
+- hosts: all #proxy
+  become: yes
+  tasks:
+
+  - name: Set a hostname
+    ansible.builtin.hostname:
+      name: proxy
+
+  - name: Set timezone to Europe/Kiev
+    community.general.timezone:
+      name: Europe/Kiev
+
+  - name: Install Node Exporter
+    include_role:
+      name: cloudalchemy.node-exporter
+
