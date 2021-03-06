@@ -1,0 +1,55 @@
+---
+
+- name: Install dependices
+  ansible.builtin.package:
+    name:
+      - zip
+      - gnupg2
+    state: latest
+
+- name: create nomad system group
+  group:
+    name: "{{ nomad_system_group }}"
+    system: true
+    state: present
+
+- name: create nomad system user
+  user:
+    name: "{{ nomad_system_user }}"
+    system: true
+    shell: "/usr/sbin/nologin"
+    group: "{{ nomad_system_group }}"
+    createhome: false
+
+- name: create nomad config directory
+  file:
+    name: "{{ nomad_conf_dir }}"
+    state: directory
+    mode: 0755
+    owner: "{{ nomad_system_user }}"
+    group: "{{ nomad_system_group }}"
+
+- name: download nomad binary to folder
+  ansible.builtin.get_url:
+    url: "{{ nomad_download_url }}"
+    dest: "/tmp/{{ nomad_archive }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: unpack nomad binaries
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ nomad_archive }}"
+    dest: "/tmp"
+    creates: "/tmp/nomad"
+    remote_src: yes
+
+- name: propagate nomad binary
+  copy:
+    src: "/tmp/nomad"
+    dest: "{{ nomad_bin_dir }}/nomad"
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: yes

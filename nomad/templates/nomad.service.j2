@@ -1,0 +1,19 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=Nomad Develop Mode Server
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ nomad_system_user }}
+Group={{ nomad_system_group }}
+ExecStart={{ nomad_bin_dir }}/nomad agent -dev -config {{ nomad_conf_dir }}/{{ nomad_conf_file }}
+
+SyslogIdentifier=nomad
+Restart=always
+RestartSec=1
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,20 @@
+galaxy_info:
+  author: webacademy
+  description: Demo role for learning Ansible
+  company: webacademy
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.10
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - Focal
+
+  galaxy_tags:
+  - nomad
+  - hashicorp
+
+dependencies:
+  - role: geerlingguy.docker

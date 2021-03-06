@@ -1,0 +1,18 @@
+---
+- name: Copy the nomad systemd service file
+  template:
+    src: nomad.service.j2
+    dest: /etc/systemd/system/nomad.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nomad
+
+- name: Copy the nomad config file
+  template:
+    src: base.hcl.j2
+    dest: "{{ nomad_conf_dir }}/{{ nomad_conf_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nomad
