@@ -4,7 +4,6 @@
   ansible.builtin.package:
     name:
       - zip
-      - gnupg2
     state: latest
 
 - name: create nomad system group
@@ -50,6 +49,6 @@
     src: "/tmp/nomad"
     dest: "{{ nomad_bin_dir }}/nomad"
     mode: 0755
-    owner: root
-    group: root
+    owner: "{{ nomad_system_user }}"
+    group: "{{ nomad_system_group }}"
     remote_src: yes

@@ -4,9 +4,17 @@ dependency:
 driver:
   name: vagrant
 platforms:
-  - name: instance
+  # - name: ubuntu-bionic
+  #   box: ubuntu/bionic64
+  - name: ubuntu-focal
     box: ubuntu/focal64
+  - name: centos-8
+    box: centos/8
 provisioner:
   name: ansible
+# lint: |
+#   set -e
+#   yamllint .
+#   ansible-lint .
 verifier:
-  name: ansible
+  name: testinfra

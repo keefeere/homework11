@@ -16,5 +16,5 @@ galaxy_info:
   - nomad
   - hashicorp
 
-dependencies:
-  - role: geerlingguy.docker
+# dependencies:
+#   - role: geerlingguy.docker
