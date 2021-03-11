@@ -17,5 +17,9 @@ provisioner:
     group_vars:
       python3:
         ansible_python_interpreter: /usr/bin/python3
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
 verifier:
   name: testinfra
