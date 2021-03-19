@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: True
+  vars:
+    nomad_telemetry_prometheus: True
+
+  roles:
+    - nomad

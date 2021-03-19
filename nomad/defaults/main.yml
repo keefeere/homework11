@@ -1,14 +1,24 @@
 ---
 # defaults file for nomad
 nomad_version: 1.0.4
-nomad_arch: amd64
+nomad_architectures:
+  amd64: amd64
+  x86_64: amd64
+  armv7l: arm
+  aarch64: arm64
+  32-bit: "386"
+  64-bit: amd64
+nomad_arch: "{{ nomad_architectures[ansible_architecture] }}"
+#nomad_arch: amd64
 nomad_archive: nomad_{{ nomad_version }}_linux_{{ nomad_arch }}.zip
 nomad_download_url: https://releases.hashicorp.com/nomad/{{ nomad_version }}/{{ nomad_archive }}
+nomad_checksums_url: "https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version}}_SHA256SUMS"
 
 nomad_bin_dir: /usr/bin
 nomad_conf_dir: /etc/nomad
 nomad_conf_file: base.hcl
 nomad_data_dir:
+nomad_bind_address: "{{ ansible_default_ipv4.address }}"
 
 nomad_system_user: nomad
 nomad_system_group: nomad
@@ -19,4 +29,3 @@ nomad_region: us-west-2
 
 nomad_debug: true
 nomad_log_level: info
-

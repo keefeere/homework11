@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
       node.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 1
+        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
       end
 
     end
@@ -36,9 +37,30 @@ Vagrant.configure("2") do |config|
       node.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 1
+        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
       end
 
     end
+
+    config.vm.define "nomad" do |node|
+
+      node.vm.network "private_network", ip: "192.168.50.4"
+      node.vm.box = "ubuntu/focal64"
+      node.vm.box_version = "20201210.0.0"
+      node.vm.provision "ansible" do |ansible|
+        ansible.galaxy_roles_path = "/vagrant"
+        ansible.playbook = "playbook-nomad.yml"
+      end
+
+      node.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+      end
+
+    end
+
+
 
 end
 

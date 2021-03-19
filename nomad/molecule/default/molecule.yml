@@ -8,8 +8,12 @@ platforms:
   #   box: ubuntu/bionic64
   - name: ubuntu-focal
     box: ubuntu/focal64
+    provider_raw_config_args:
+     - "customize [ 'modifyvm', :id, '--uartmode1', 'disconnected' ]"
   - name: centos-8
     box: centos/8
+    provider_raw_config_args:
+      - "customize [ 'modifyvm', :id, '--uartmode1', 'disconnected' ]"
 provisioner:
   name: ansible
 lint: |

@@ -28,10 +28,27 @@
     owner: "{{ nomad_system_user }}"
     group: "{{ nomad_system_group }}"
 
+- name: get nomad checksums file
+  get_url:
+      url: "{{ nomad_checksums_url }}"
+      dest: "/tmp/nomad_{{ nomad_version }}_SHA256SUMS"
+    
+- name: parse nomad file checksum
+  shell: |
+    set -o pipefail
+    grep "{{ nomad_archive }}" "/tmp/nomad_{{ nomad_version }}_SHA256SUMS"  | awk '{print $1}'
+  args:
+    executable: /bin/bash
+    warn: no
+  register: nomad_checksum
+  changed_when: nomad_checksum.stdout|length > 0
+  
+
 - name: download nomad binary to folder
   ansible.builtin.get_url:
     url: "{{ nomad_download_url }}"
     dest: "/tmp/{{ nomad_archive }}"
+    checksum: "sha256:{{ nomad_checksum.stdout }}"
   register: _download_archive
   until: _download_archive is succeeded
   retries: 5

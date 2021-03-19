@@ -1,9 +1,8 @@
 galaxy_info:
-  author: webacademy
+  role_name: nomad
+  author: keefeere
   description: Demo role for learning Ansible
-  company: webacademy
-
-  license: license (GPL-2.0-or-later, MIT, etc)
+  license: GPL-2.0-or-later, MIT, etc
 
   min_ansible_version: 2.10
 
@@ -15,6 +14,3 @@ galaxy_info:
   galaxy_tags:
   - nomad
   - hashicorp
-
-# dependencies:
-#   - role: geerlingguy.docker

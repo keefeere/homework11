@@ -1,1 +1,3 @@
 .vagrant
+nomad/molecule/default/tests/__pycache__/*
+/nomad/.cache

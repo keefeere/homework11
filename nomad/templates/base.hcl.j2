@@ -1,6 +1,16 @@
 region = "{{ nomad_region }}"
 datacenter = "{{ nomad_datacenter }}"
-
+bind_addr = "{{ nomad_bind_address }}"
 enable_debug = {{ nomad_debug | bool | lower }}
 
 log_level = "{{ nomad_log_level | upper }}"
+
+{% if nomad_telemetry_prometheus | default(False) | bool == True %}
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}
+{% endif %}
